@@ -1,355 +1,20 @@
-// const express = require('express');
-// const path = require('path');
-//
-// const app = express();
-// const PORT = process.env.PORT || 8080;
-//
-// // Middleware
-// app.use(express.json());
-// app.use('/frontend', express.static('frontend'));
-//
-// // Простые данные для заголовков
-// const HEADERS_DATA = {
-//     "headers": [
-//         {
-//             "id": "factory1",
-//             "parentId": null,
-//             "type": "node",
-//             "name": "Завод №1 'Металлург'",
-//             "metadata": {
-//                 "color": "#343434",
-//                 "tooltip": "Основной производственный комплекс",
-//                 "workCount": 150
-//             }
-//         },
-//         {
-//             "id": "workshop1",
-//             "parentId": "factory1",
-//             "type": "assembly",
-//             "name": "Цех сборки №1",
-//             "metadata": {
-//                 "color": "#4caf50",
-//                 "tooltip": "Основной сборочный цех",
-//                 "workCount": 45
-//             }
-//         },
-//         {
-//             "id": "line1",
-//             "parentId": "workshop1",
-//             "type": "component",
-//             "name": "Линия А",
-//             "metadata": {
-//                 "color": "#ff9800",
-//                 "tooltip": "Автоматизированная линия сборки",
-//                 "workCount": 15
-//             }
-//         },
-//         {
-//             "id": "station1",
-//             "parentId": "line1",
-//             "type": "component",
-//             "name": "Станция 1",
-//             "metadata": {
-//                 "color": "#f44336",
-//                 "tooltip": "Начальная станция сборки",
-//                 "workCount": 3
-//             }
-//         },
-//         {
-//             "id": "station2",
-//             "parentId": "line1",
-//             "type": "component",
-//             "name": "Станция 2",
-//             "metadata": {
-//                 "color": "#f44336",
-//                 "tooltip": "Промежуточная станция",
-//                 "workCount": 4
-//             }
-//         },
-//         {
-//             "id": "station3",
-//             "parentId": "line1",
-//             "type": "component",
-//             "name": "Станция 3",
-//             "metadata": {
-//                 "color": "#f44336",
-//                 "tooltip": "Финальная станция",
-//                 "workCount": 5
-//             }
-//         },
-//         {
-//             "id": "line2",
-//             "parentId": "workshop1",
-//             "type": "component",
-//             "name": "Линия Б",
-//             "metadata": {
-//                 "color": "#ff9800",
-//                 "tooltip": "Полуавтоматическая линия",
-//                 "workCount": 12
-//             }
-//         },
-//         {
-//             "id": "station4",
-//             "parentId": "line2",
-//             "type": "component",
-//             "name": "Станция 4",
-//             "metadata": {
-//                 "color": "#f44336",
-//                 "tooltip": "Контрольная станция",
-//                 "workCount": 2
-//             }
-//         },
-//         {
-//             "id": "station5",
-//             "parentId": "line2",
-//             "type": "component",
-//             "name": "Станция 5",
-//             "metadata": {
-//                 "color": "#f44336",
-//                 "tooltip": "Упаковочная станция",
-//                 "workCount": 3
-//             }
-//         },
-//         {
-//             "id": "workshop2",
-//             "parentId": "factory1",
-//             "type": "assembly",
-//             "name": "Цех механообработки",
-//             "metadata": {
-//                 "color": "#4caf50",
-//                 "tooltip": "Цех механической обработки деталей",
-//                 "workCount": 65
-//             }
-//         },
-//         {
-//             "id": "section1",
-//             "parentId": "workshop2",
-//             "type": "component",
-//             "name": "Участок токарных работ",
-//             "metadata": {
-//                 "color": "#9c27b0",
-//                 "tooltip": "Участок токарной обработки",
-//                 "workCount": 25
-//             }
-//         },
-//         {
-//             "id": "machine1",
-//             "parentId": "section1",
-//             "type": "component",
-//             "name": "Станок ЧПУ-1",
-//             "metadata": {
-//                 "color": "#795548",
-//                 "tooltip": "Токарный станок с ЧПУ",
-//                 "workCount": 1
-//             }
-//         },
-//         {
-//             "id": "machine2",
-//             "parentId": "section1",
-//             "type": "component",
-//             "name": "Станок ЧПУ-2",
-//             "metadata": {
-//                 "color": "#795548",
-//                 "tooltip": "Фрезерный станок с ЧПУ",
-//                 "workCount": 1
-//             }
-//         },
-//         {
-//             "id": "factory2",
-//             "parentId": null,
-//             "type": "node",
-//             "name": "Завод №2 'Электрон'",
-//             "metadata": {
-//                 "color": "#3f51b5",
-//                 "tooltip": "Завод электронных компонентов",
-//                 "workCount": 120
-//             }
-//         },
-//         {
-//             "id": "workshop3",
-//             "parentId": "factory2",
-//             "type": "assembly",
-//             "name": "Цех печатных плат",
-//             "metadata": {
-//                 "color": "#00bcd4",
-//                 "tooltip": "Производство печатных плат",
-//                 "workCount": 35
-//             }
-//         },
-//         {
-//             "id": "pcb_line1",
-//             "parentId": "workshop3",
-//             "type": "component",
-//             "name": "Линия ПП-1",
-//             "metadata": {
-//                 "color": "#e91e63",
-//                 "tooltip": "Линия производства печатных плат",
-//                 "workCount": 8
-//             }
-//         },
-//         {
-//             "id": "pcb_line2",
-//             "parentId": "workshop3",
-//             "type": "component",
-//             "name": "Линия ПП-2",
-//             "metadata": {
-//                 "color": "#e91e63",
-//                 "tooltip": "Линия производства сложных плат",
-//                 "workCount": 6
-//             }
-//         }
-//     ]
-// };
-//
-// // API для данных таблицы - все ячейки 'М' (зелёные)
-// app.post('/api/data', (req, res) => {
-//     const { startDate, days, leafNodes } = req.body;
-//
-//     console.log(`[API] Запрос данных: startDate=${startDate}, days=${days}, leafNodes=${leafNodes.length}`);
-//
-//     const data = [];
-//     const [day, month, year] = startDate.split('.').map(Number);
-//     const startDateObj = new Date(year, month - 1, day);
-//
-//     for (let i = 0; i < days; i++) {
-//         const currentDate = new Date(startDateObj);
-//         currentDate.setDate(startDateObj.getDate() + i);
-//
-//         const dateStr = currentDate.toLocaleDateString('ru-RU', {
-//             day: '2-digit',
-//             month: '2-digit',
-//             year: 'numeric'
-//         });
-//
-//         const dayData = { date: dateStr };
-//
-//         // Все ячейки заполняем 'М' (зелёные)
-//         leafNodes.forEach(node => {
-//             dayData[node.id] = 'М';
-//         });
-//
-//         data.push(dayData);
-//     }
-//
-//     console.log(`[API] Возвращено ${data.length} записей`);
-//     res.json({ data });
-// });
-//
-// // API для кликов по ячейкам - вывод в консоль
-// app.post('/api/click', (req, res) => {
-//     const { cellData } = req.body;
-//
-//     // Выводим дату и ID столбца
-//     console.log(`[КЛИК] Дата: ${cellData.date}, ID столбца: ${cellData.nodeId || cellData.node?.id}`);
-//
-//     res.json({ success: true });
-// });
-//
-// // Главная страница с упрощённой HTML
-// app.get('/', (req, res) => {
-//     res.send(`<!DOCTYPE html>
-// <html lang="ru">
-// <head>
-//     <meta charset="utf-8" />
-//     <meta name="viewport" content="width=device-width, initial-scale=1" />
-//     <title>Простая виртуализированная таблица</title>
-//     <style>
-//         body {
-//             font-family: Arial, sans-serif;
-//             margin: 20px;
-//             background-color: #f5f5f5;
-//         }
-//         h1 {
-//             color: #333;
-//             margin-bottom: 20px;
-//         }
-//         virtualized-table {
-//             background: white;
-//             border-radius: 4px;
-//             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-//         }
-//     </style>
-// </head>
-// <body>
-//     <h1>Простая виртуализированная таблица</h1>
-//
-//     <virtualized-table
-//         max-width="100%"
-//         max-height="600px"
-//         scroll-batch-size="7"
-//         debug="true">
-//     </virtualized-table>
-//
-//     <script>
-//         // 1. Провайдер заголовков (hp) - вызывается только при инициализации
-//         window.hp = function() {
-//             console.log('[HP] Загрузка заголовков');
-//             return ${JSON.stringify(HEADERS_DATA)};
-//         };
-//
-//         // 2. Провайдер данных (dp) - все ячейки 'М'
-//         window.dp = async function(startDate, days, leafNodes) {
-//             console.log(\`[DP] Запрос: \${startDate}, дней: \${days}, узлов: \${leafNodes.length}\`);
-//
-//             try {
-//                 const response = await fetch('/api/data', {
-//                     method: 'POST',
-//                     headers: { 'Content-Type': 'application/json' },
-//                     body: JSON.stringify({ startDate, days, leafNodes })
-//                 });
-//
-//                 const result = await response.json();
-//                 return { data: result.data };
-//             } catch (error) {
-//                 console.error('[DP] Ошибка:', error);
-//                 return { data: [] };
-//             }
-//         };
-//
-//         // 3. Обработчик кликов - вывод в консоль
-//         window.onTableCellClick = function(cellData) {
-//             console.log(\`[КЛИК] Дата: \${cellData.date}, ID: \${cellData.nodeId || cellData.node?.id}\`);
-//
-//             // Отправляем на сервер для логирования
-//             fetch('/api/click', {
-//                 method: 'POST',
-//                 headers: { 'Content-Type': 'application/json' },
-//                 body: JSON.stringify({ cellData })
-//             }).catch(err => console.error('Ошибка отправки клика:', err));
-//         };
-//
-//         // Загрузка компонента
-//         const script = document.createElement('script');
-//         script.src = '/frontend/dist/virtualized-table.js';
-//
-//         script.onload = function() {
-//             setTimeout(() => {
-//                 if (customElements.get('virtualized-table')) {
-//                     console.log('[HTML] ✅ Компонент загружен успешно');
-//                 } else {
-//                     console.error('[HTML] ❌ Компонент не зарегистрирован');
-//                 }
-//             }, 500);
-//         };
-//
-//         script.onerror = function() {
-//             console.error('[HTML] ❌ Ошибка загрузки компонента');
-//         };
-//
-//         document.head.appendChild(script);
-//     </script>
-// </body>
-// </html>`);
-// });
-//
-// // Запуск сервера
-// app.listen(PORT, () => {
-//     console.log(`🚀 Сервер запущен на http://localhost:${PORT}`);
-//     console.log(`📂 Статические файлы: ${path.resolve(__dirname, 'frontend')}`);
-// });
-
 const express = require('express');
 const path = require('path');
+
+const {
+    getHeaders,
+    getLeafNodeIds,
+    getHeadersByLevel,
+    getNodeHierarchy
+} = require('./providers/headersProvider');
+
+const {
+    generateTableData,
+    getDataForPeriod,
+    getStatusStatistics,
+    handleCellClick,
+    EQUIPMENT_STATUSES
+} = require('./providers/dataProvider');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -358,118 +23,245 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use('/frontend', express.static('frontend'));
 
-// Простые данные для заголовков с правильной структурой metadata
-const HEADERS_DATA = {
-    headers: [
-        { id: "factory1", parentId: null, name: "Завод №1", metadata: { color: "#343434", workCount: 150 } },
-        { id: "workshop1", parentId: "factory1", name: "Цех 1", metadata: { color: "#4caf50", workCount: 45 } },
-        { id: "line1", parentId: "workshop1", name: "Линия А", metadata: { color: "#ff9800", workCount: 15 } },
-        { id: "station1", parentId: "line1", name: "Станция 1", metadata: { color: "#f44336", workCount: 3 } },
-        { id: "station2", parentId: "line1", name: "Станция 2", metadata: { color: "#f44336", workCount: 4 } },
-        { id: "station3", parentId: "line1", name: "Станция 3", metadata: { color: "#f44336", workCount: 5 } },
-        { id: "line2", parentId: "workshop1", name: "Линия Б", metadata: { color: "#ff9800", workCount: 12 } },
-        { id: "station4", parentId: "line2", name: "Станция 4", metadata: { color: "#f44336", workCount: 2 } },
-        { id: "station5", parentId: "line2", name: "Станция 5", metadata: { color: "#f44336", workCount: 3 } }
-    ]
-};
+// API для получения заголовков
+app.get('/api/headers', async (req, res) => {
+    try {
+        console.log('[API] Запрос заголовков');
+        const headers = await getHeaders();
 
-// Утилита для работы с датами
-function parseDateString(dateString) {
-    const [day, month, year] = dateString.split('.').map(Number);
-    return new Date(Date.UTC(year, month - 1, day));
-}
+        res.json({
+            success: true,
+            data: headers,
+            timestamp: new Date().toISOString()
+        });
 
-function formatDate(date) {
-    return date.toLocaleDateString('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-    });
-}
+    } catch (error) {
+        console.error('[API] Ошибка получения заголовков:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message,
+            timestamp: new Date().toISOString()
+        });
+    }
+});
+
+// API для получения заголовков по уровню
+app.get('/api/headers/level/:level', async (req, res) => {
+    try {
+        const level = parseInt(req.params.level);
+        console.log(`[API] Запрос заголовков уровня ${level}`);
+
+        const headers = await getHeadersByLevel(level);
+
+        res.json({
+            success: true,
+            data: headers,
+            level: level,
+            timestamp: new Date().toISOString()
+        });
+
+    } catch (error) {
+        console.error('[API] Ошибка получения заголовков по уровню:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// API для получения иерархии узла
+app.get('/api/headers/hierarchy/:nodeId', async (req, res) => {
+    try {
+        const nodeId = req.params.nodeId;
+        console.log(`[API] Запрос иерархии для узла ${nodeId}`);
+
+        const hierarchy = await getNodeHierarchy(nodeId);
+
+        res.json({
+            success: true,
+            data: hierarchy,
+            nodeId: nodeId,
+            timestamp: new Date().toISOString()
+        });
+
+    } catch (error) {
+        console.error('[API] Ошибка получения иерархии:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
 
 // API для данных таблицы - новый формат с направлением
-app.post('/api/data', (req, res) => {
-    const { startDate, direction, batchSize } = req.body;
+app.post('/api/data', async (req, res) => {
+    try {
+        const { startDate, direction, batchSize, options = {} } = req.body;
 
-    console.log(`[API] Запрос данных: startDate=${startDate}, direction=${direction}, batchSize=${batchSize}`);
+        console.log(`[API] Запрос данных: startDate=${startDate}, direction=${direction}, batchSize=${batchSize}`);
 
-    const data = [];
-    const startDateObj = parseDateString(startDate);
+        // Валидация параметров
+        if (!startDate) {
+            return res.status(400).json({
+                success: false,
+                error: 'Параметр startDate обязателен'
+            });
+        }
 
-    // Определяем диапазон дат в зависимости от направления
-    let startDay = 0;
-    let endDay = batchSize;
+        if (!['up', 'down'].includes(direction)) {
+            return res.status(400).json({
+                success: false,
+                error: 'direction должен быть "up" или "down"'
+            });
+        }
 
-    if (direction === 'backward') {
-        startDay = -batchSize;
-        endDay = 0;
+        if (!batchSize || batchSize <= 0 || batchSize > 100) {
+            return res.status(400).json({
+                success: false,
+                error: 'batchSize должен быть от 1 до 100'
+            });
+        }
+
+        const result = await generateTableData(startDate, direction, batchSize, options);
+
+        res.json({
+            success: true,
+            ...result,
+            timestamp: new Date().toISOString()
+        });
+
+    } catch (error) {
+        console.error('[API] Ошибка генерации данных:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message,
+            timestamp: new Date().toISOString()
+        });
     }
+});
 
-    // Генерируем данные в новом формате
-    for (let i = startDay; i < endDay; i++) {
-        const currentDate = new Date(startDateObj);
-        currentDate.setUTCDate(startDateObj.getUTCDate() + i);
+// API для получения данных за период
+app.post('/api/data/period', async (req, res) => {
+    try {
+        const { startDate, endDate, options = {} } = req.body;
 
-        const dateStr = formatDate(currentDate);
+        console.log(`[API] Запрос данных за период: ${startDate} - ${endDate}`);
 
-        const dayData = {
-            date: dateStr,
-            columns: [
-                // Все ячейки заполняем 'М' (зелёные) как требовалось
-                { headerId: "station1", value: "М" },
-                { headerId: "station2", value: "М" },
-                { headerId: "station3", value: "М" },
-                { headerId: "station4", value: "М" },
-                { headerId: "station5", value: "М" }
-            ]
-        };
+        const result = await getDataForPeriod(startDate, endDate, options);
 
-        data.push(dayData);
+        res.json({
+            success: true,
+            ...result,
+            timestamp: new Date().toISOString()
+        });
+
+    } catch (error) {
+        console.error('[API] Ошибка получения данных за период:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
     }
+});
 
-    console.log(`[API] Возвращено ${data.length} записей в новом формате`);
-    res.json({ data });
+// API для статистики по статусам
+app.post('/api/data/statistics', async (req, res) => {
+    try {
+        const { startDate, direction, batchSize } = req.body;
+
+        console.log(`[API] Запрос статистики: ${startDate}, ${direction}, ${batchSize}`);
+
+        const statistics = await getStatusStatistics(startDate, direction, batchSize);
+
+        res.json({
+            success: true,
+            ...statistics,
+            timestamp: new Date().toISOString()
+        });
+
+    } catch (error) {
+        console.error('[API] Ошибка получения статистики:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
 });
 
 // API для кликов по ячейкам - async обработка
 app.post('/api/click', async (req, res) => {
-    const { cellData } = req.body;
-
     try {
-        // Имитируем async обработку клика
-        console.log(`[ASYNC КЛИК] Дата: ${cellData.date}, ID столбца: ${cellData.nodeId}`);
+        const { cellData, options = {} } = req.body;
 
-        // Имитация задержки обработки на сервере
-        await new Promise(resolve => setTimeout(resolve, 100));
+        console.log(`[API] Обработка клика: ${cellData?.date} - ${cellData?.nodeId}`);
 
-        // Здесь может быть ваша бизнес-логика
-        const result = {
-            processed: true,
-            timestamp: new Date().toISOString(),
-            cellInfo: {
-                date: cellData.date,
-                columnId: cellData.nodeId,
-                value: cellData.value
-            }
-        };
+        if (!cellData || !cellData.date || !cellData.nodeId) {
+            return res.status(400).json({
+                success: false,
+                error: 'Неполные данные ячейки'
+            });
+        }
 
-        console.log(`[ASYNC КЛИК] Обработано успешно:`, result);
-        res.json({ success: true, result });
+        const result = await handleCellClick(cellData, options);
+
+        res.json({
+            success: true,
+            ...result,
+            timestamp: new Date().toISOString()
+        });
 
     } catch (error) {
-        console.error(`[ASYNC КЛИК] Ошибка обработки:`, error);
-        res.status(500).json({ success: false, error: error.message });
+        console.error('[API] Ошибка обработки клика:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message,
+            timestamp: new Date().toISOString()
+        });
     }
 });
 
-// Главная страница с async провайдерами
-app.get('/', (req, res) => {
-    res.send(`<!DOCTYPE html>
+// API для получения информации о статусах
+app.get('/api/statuses', (req, res) => {
+    res.json({
+        success: true,
+        data: EQUIPMENT_STATUSES,
+        timestamp: new Date().toISOString()
+    });
+});
+
+// API для информации о листовых узлах
+app.get('/api/leaf-nodes', async (req, res) => {
+    try {
+        const leafNodeIds = getLeafNodeIds();
+
+        res.json({
+            success: true,
+            data: leafNodeIds,
+            count: leafNodeIds.length,
+            timestamp: new Date().toISOString()
+        });
+
+    } catch (error) {
+        console.error('[API] Ошибка получения листовых узлов:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
+// Главная страница с интегрированными провайдерами
+app.get('/', async (req, res) => {
+    try {
+        // Получаем заголовки на сервере для встраивания в HTML
+        const headersData = await getHeaders();
+
+        res.send(`<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Async виртуализированная таблица</title>
+    <title>Модульная виртуализированная таблица</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -492,13 +284,31 @@ app.get('/', (req, res) => {
             margin-bottom: 20px;
             font-size: 14px;
         }
+        .api-status {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>Async виртуализированная таблица</h1>
+    <h1>Модульная виртуализированная таблица</h1>
     
     <div class="status">
-        <strong>Статус:</strong> Все провайдеры теперь async функции с новым API
+        <strong>Архитектура:</strong> Модульные провайдеры с разделением ответственности
+    </div>
+    
+    <div class="api-status">
+        <strong>API Endpoints:</strong>
+        <ul>
+            <li>GET /api/headers - получение структуры заголовков</li>
+            <li>POST /api/data - получение данных таблицы</li>
+            <li>POST /api/click - обработка кликов</li>
+            <li>GET /api/statuses - информация о статусах</li>
+        </ul>
     </div>
 
     <virtualized-table
@@ -509,26 +319,52 @@ app.get('/', (req, res) => {
     </virtualized-table>
 
     <script>
-        // 1. Async провайдер заголовков (hp) - вызывается только при инициализации
+        console.log('[Main] Инициализация модульных провайдеров...');
+        
+        // 1. Async провайдер заголовков через API
         window.hp = async function() {
-            console.log('[ASYNC HP] Загрузка заголовков...');
+            console.log('[ASYNC HP] Загрузка заголовков через API...');
             
-            // Имитация async загрузки
-            await new Promise(resolve => setTimeout(resolve, 50));
-            
-            console.log('[ASYNC HP] Заголовки загружены');
-            return ${JSON.stringify(HEADERS_DATA)};
+            try {
+                const response = await fetch('/api/headers');
+                if (!response.ok) {
+                    throw new Error(\`HTTP \${response.status}: \${response.statusText}\`);
+                }
+                
+                const result = await response.json();
+                if (!result.success) {
+                    throw new Error(result.error || 'Ошибка получения заголовков');
+                }
+                
+                console.log(\`[ASYNC HP] Загружено \${result.data.headers.length} заголовков\`);
+                return result.data;
+                
+            } catch (error) {
+                console.error('[ASYNC HP] Ошибка:', error);
+                
+                // Fallback на локальные данные
+                console.log('[ASYNC HP] Используем встроенные заголовки');
+                return ${JSON.stringify(headersData)};
+            }
         };
 
-        // 2. Async провайдер данных (dp) - новый API с направлением
+        // 2. Async провайдер данных через API
         window.dp = async function(startDate, direction, batchSize) {
-            console.log(\`[ASYNC DP] Запрос: \${startDate}, направление: \${direction}, размер: \${batchSize}\`);
+            console.log(\`[ASYNC DP] Запрос через API: \${startDate}, \${direction}, \${batchSize}\`);
             
             try {
                 const response = await fetch('/api/data', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ startDate, direction, batchSize })
+                    body: JSON.stringify({ 
+                        startDate, 
+                        direction, 
+                        batchSize,
+                        options: {
+                            useContextualStatus: true,
+                            simulateDbDelay: true
+                        }
+                    })
                 });
                 
                 if (!response.ok) {
@@ -536,25 +372,33 @@ app.get('/', (req, res) => {
                 }
                 
                 const result = await response.json();
-                console.log(\`[ASYNC DP] Получено \${result.data.length} записей\`);
-                return result;
+                if (!result.success) {
+                    throw new Error(result.error || 'Ошибка получения данных');
+                }
+                
+                console.log(\`[ASYNC DP] Получено \${result.data.length} записей через API\`);
+                return { data: result.data };
                 
             } catch (error) {
-                console.error('[ASYNC DP] Ошибка:', error);
+                console.error('[ASYNC DP] Ошибка API:', error);
                 throw error;
             }
         };
 
-        // 3. Async обработчик кликов
+        // 3. Async обработчик кликов через API
         window.onTableCellClick = async function(cellData) {
-            console.log(\`[ASYNC КЛИК] Обрабатываем клик: \${cellData.date} / \${cellData.nodeId}\`);
+            console.log(\`[ASYNC CLICK] Обработка через API: \${cellData.date} / \${cellData.nodeId}\`);
             
             try {
-                // Показываем индикатор загрузки (компонент сам это обрабатывает)
                 const response = await fetch('/api/click', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ cellData })
+                    body: JSON.stringify({ 
+                        cellData,
+                        options: {
+                            processingDelay: 150
+                        }
+                    })
                 });
                 
                 if (!response.ok) {
@@ -562,16 +406,62 @@ app.get('/', (req, res) => {
                 }
                 
                 const result = await response.json();
-                console.log('[ASYNC КЛИК] Ответ сервера:', result);
-                
-                // Можно показать уведомление об успешной обработке
-                if (result.success) {
-                    console.log('✅ Клик обработан успешно');
+                if (!result.success) {
+                    throw new Error(result.error || 'Ошибка обработки клика');
                 }
                 
+                console.log('[ASYNC CLICK] Результат API:', result);
+                
+                // Показываем информацию о статусе
+                if (result.cellInfo && result.cellInfo.statusInfo) {
+                    console.log(\`[INFO] Статус: \${result.cellInfo.statusInfo.name}\`);
+                }
+                
+                // Показываем выполненные действия
+                if (result.actions && result.actions.length > 0) {
+                    console.log('[ACTIONS]', result.actions);
+                }
+                
+                return result;
+                
             } catch (error) {
-                console.error('❌ Ошибка обработки клика:', error);
-                // Можно показать уведомление об ошибке
+                console.error('[ASYNC CLICK] Ошибка API:', error);
+                throw error;
+            }
+        };
+
+        // 4. Дополнительные утилиты для работы с API
+        window.tableAPI = {
+            // Получение статистики
+            async getStatistics(startDate, direction, batchSize) {
+                const response = await fetch('/api/data/statistics', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ startDate, direction, batchSize })
+                });
+                return response.json();
+            },
+            
+            // Получение данных за период
+            async getDataForPeriod(startDate, endDate) {
+                const response = await fetch('/api/data/period', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ startDate, endDate })
+                });
+                return response.json();
+            },
+            
+            // Получение информации о статусах
+            async getStatusInfo() {
+                const response = await fetch('/api/statuses');
+                return response.json();
+            },
+            
+            // Получение листовых узлов
+            async getLeafNodes() {
+                const response = await fetch('/api/leaf-nodes');
+                return response.json();
             }
         };
 
@@ -580,16 +470,33 @@ app.get('/', (req, res) => {
         script.src = '/frontend/dist/virtualized-table.js';
         
         script.onload = function() {
-            setTimeout(() => {
+            setTimeout(async () => {
                 if (customElements.get('virtualized-table')) {
-                    console.log('[HTML] ✅ Async компонент загружен успешно');
+                    console.log('[HTML] ✅ Модульный компонент загружен успешно');
                     
-                    // Тест async провайдеров
-                    window.hp().then(headers => {
+                    try {
+                        // Тест провайдеров
+                        const headers = await window.hp();
                         console.log('[TEST] HP тест пройден:', headers.headers.length, 'заголовков');
-                    }).catch(err => {
-                        console.error('[TEST] HP тест провален:', err);
-                    });
+                        
+                        const testDataDown = await window.dp('01.01.2024', 'down', 3);
+                        console.log('[TEST] DP тест (down) пройден:', testDataDown.data.length, 'записей');
+                        
+                        const testDataUp = await window.dp('01.01.2024', 'up', 3);
+                        console.log('[TEST] DP тест (up) пройден:', testDataUp.data.length, 'записей');
+                        
+                        // Тест API утилит
+                        const statuses = await window.tableAPI.getStatusInfo();
+                        console.log('[TEST] Статусы загружены:', Object.keys(statuses.data).length);
+                        
+                        const leafNodes = await window.tableAPI.getLeafNodes();
+                        console.log('[TEST] Листовые узлы:', leafNodes.data.length);
+                        
+                        console.log('[TEST] ✅ Все модульные провайдеры работают корректно');
+                        
+                    } catch (error) {
+                        console.error('[TEST] ❌ Ошибка в модульных провайдерах:', error);
+                    }
                     
                 } else {
                     console.error('[HTML] ❌ Компонент не зарегистрирован');
@@ -605,11 +512,48 @@ app.get('/', (req, res) => {
     </script>
 </body>
 </html>`);
+
+    } catch (error) {
+        console.error('[Server] Ошибка генерации главной страницы:', error);
+        res.status(500).send('Ошибка сервера при загрузке страницы');
+    }
+});
+
+// Middleware для обработки 404
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        error: 'Endpoint не найден',
+        availableEndpoints: [
+            'GET /',
+            'GET /api/headers',
+            'GET /api/headers/level/:level',
+            'GET /api/headers/hierarchy/:nodeId',
+            'POST /api/data',
+            'POST /api/data/period',
+            'POST /api/data/statistics',
+            'POST /api/click',
+            'GET /api/statuses',
+            'GET /api/leaf-nodes'
+        ]
+    });
+});
+
+// Middleware для обработки ошибок
+app.use((error, req, res, next) => {
+    console.error('[Server] Необработанная ошибка:', error);
+    res.status(500).json({
+        success: false,
+        error: 'Внутренняя ошибка сервера',
+        timestamp: new Date().toISOString()
+    });
 });
 
 // Запуск сервера
 app.listen(PORT, () => {
-    console.log(`🚀 Async сервер запущен на http://localhost:${PORT}`);
+    console.log(`🚀 Модульный сервер запущен на http://localhost:${PORT}`);
     console.log(`📂 Статические файлы: ${path.resolve(__dirname, 'frontend')}`);
-    console.log('✨ Все провайдеры теперь поддерживают async/await');
+    console.log('🔧 Провайдеры: headers (модуль), data (модуль)');
+    console.log('🌐 API эндпоинты доступны по /api/*');
+    console.log('✨ Полная модульная архитектура готова к работе');
 });
